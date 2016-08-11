@@ -10,6 +10,7 @@ namespace modernkernel\fineuploader;
 
 use yii\base\Widget;
 use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class Fineuploader
@@ -19,6 +20,7 @@ class Fineuploader extends Widget
 {
 
     public $template='';
+
 
     /* labels */
     public $dropLabel = 'Drop your files here';
@@ -34,6 +36,10 @@ class Fineuploader extends Widget
     public $noLabel = 'No';
     public $okLabel = 'OK';
     public $editFilenameLabel = 'Edit filename';
+    protected $uploaderTypes = [
+        's3' => 'fineUploaderS3',
+        'traditional' => 'fineUploader',
+    ];
 
     /**
      * fineuploader options
@@ -42,7 +48,7 @@ class Fineuploader extends Widget
      */
     public $options = []; //
     public $default_options = [
-        'template' => 'qq-template'
+        'template' => 'qq-template-s3'
     ];
 
     /**
@@ -173,9 +179,11 @@ EOB;
     protected function registerJS()
     {
         $id = $this->getId();
+        // $_type = ArrayHelper::remove($options,'uploaderType','traditional');
         $options = Json::encode($this->options);
+        // $type = ArrayHelper::getValue($this->uploaderTypes,$_type,'fineUploader');
         $script = <<<EOD
-$("#{$id}").fineUploader({$options})
+$("#{$id}").fineUploaderS3({$options})
 .on("autoRetry", function(event, id, name){{$this->events['autoRetry']}})
 .on("cancel", function(event, id, name){{$this->events['cancel']}})
 .on("complete", function(event, id, name, responseJSON){{$this->events['complete']}})

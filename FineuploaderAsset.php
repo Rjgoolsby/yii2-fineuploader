@@ -17,11 +17,12 @@ use yii\web\AssetBundle;
 class FineuploaderAsset extends AssetBundle
 {
 
-    public $sourcePath = '@npm/fine-uploader/jquery.fine-uploader';
+    public $sourcePath = '@npm/fine-uploader/s3.jquery.fine-uploader';
     public $js = [
-        'jquery.fine-uploader.min.js'
+        's3.jquery.fine-uploader.js'
     ];
     public $css = [
+        'fine-uploader-gallery.min.css',
         'fine-uploader-new.min.css',
     ];
     public $depends = [
